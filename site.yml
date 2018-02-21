@@ -5,6 +5,11 @@
   become: true
   
   tasks:
+  - name: add openjdk ppa
+    apt_repository:
+      repo: 'ppa:openjdk-r/ppa'
+      update_cache: yes
+  
   - name: ensure java installed
     package:
       name: openjdk-8-jdk
@@ -37,12 +42,6 @@
       owner: root
       mode: 0644
       
-      
-  - name: add openjdk ppa
-    apt_repository:
-      repo: 'ppa:openjdk-r/ppa'
-      update_cache: yes
-
 
 
     
