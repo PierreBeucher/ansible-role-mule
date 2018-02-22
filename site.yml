@@ -5,6 +5,8 @@
   become: true
   
   tasks:
+  
+  # runtime
   - name: add openjdk ppa
     apt_repository:
       repo: 'ppa:openjdk-r/ppa'
@@ -33,6 +35,7 @@
       owner: mule
       group: mule
       creates: /opt/mule-standalone-3.9.0/ansible.done
+      
   - name: creates ansible.done file for mule runtime
     copy:
       content: ""
@@ -42,8 +45,29 @@
       owner: root
       mode: 0644
       
+  - name: create symlink to current Mule version
+    file:
+      src: /opt/mule-standalone-3.9.0
+      dest: /opt/mule
+      owner: root
+      group: root
+      state: link
+
+  # service
+  - name: install Mule init.d file
+    template:
+      src: templates/init.d/mule
+      dest: /etc/init.d/mule
+      owner: root
+      group: root
+      mode: 0755
+
+  - name: ensure Mule service started
+    service:
+      name: mule
+      state: started
 
 
-    
+  
     
       
