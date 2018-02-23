@@ -1,0 +1,8 @@
+# Install a Mule Standalone runtime 
+- name: download or copy Mule runtime archive
+  hosts: all
+  remote_user: vagrant
+  become: true
+
+  roles:
+     - mule
