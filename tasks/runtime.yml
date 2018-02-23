@@ -43,3 +43,13 @@
     owner: root
     group: root
     state: link
+
+- name: set wrapper.conf template
+  template:
+    src: wrapper.conf.j2
+    dest: /opt/mule/wrapper.conf
+    owner: mule
+    group: mule
+    mode: 0640
+  notify:
+  - restart Mule service

@@ -5,6 +5,10 @@
   become: true
   
   tasks:
+  - include_vars: defaults/main.yml
   - import_tasks: tasks/runtime.yml
   - import_tasks: tasks/service.yml
-      
+
+  handlers:
+  - import_tasks: handlers/main.yml
+

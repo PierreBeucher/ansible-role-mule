@@ -1,4 +1,4 @@
 - name: restart Mule service
   service:
     name: mule
-    state: started
+    state: restarted
