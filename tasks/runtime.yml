@@ -1,0 +1,45 @@
+- name: add openjdk ppa
+  apt_repository:
+    repo: 'ppa:openjdk-r/ppa'
+    update_cache: yes
+
+- name: ensure java installed
+  package:
+    name: openjdk-8-jdk
+    state: present
+
+- name: make sure unzip package installed
+  package:
+    name: unzip
+    state: latest
+
+- name: create 'mule' user
+  user:
+    name: mule
+    comment: "Mule Server Standalone"
+
+- name: copy runtime from controller machine
+  unarchive:
+    copy: yes
+    src: /home/vagrant/mule/mule-standalone-3.9.0.zip
+    dest: /opt
+    owner: mule
+    group: mule
+    creates: /opt/mule-standalone-3.9.0/ansible.done
+
+- name: creates ansible.done file for mule runtime
+  copy:
+    content: ""
+    dest: /opt/mule-standalone-3.9.0/ansible.done
+    force: no
+    group: root
+    owner: root
+    mode: 0644
+
+- name: create symlink to current Mule version
+  file:
+    src: /opt/mule-standalone-3.9.0
+    dest: /opt/mule
+    owner: root
+    group: root
+    state: link
